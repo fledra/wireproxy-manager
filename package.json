@@ -1,0 +1,40 @@
+{
+  "name": "wireproxy-manager",
+  "description": "A simple GUI for managing multiple wireproxy instances",
+  "version": "0.1.0",
+  "license": "GPL-3.0-only",
+  "private": true,
+  "type": "module",
+  "author": "Baran D. <baran@fledra.dev> (https://fledra.dev)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fledra/wireproxy-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fledra/wireproxy-manager/issues"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "icon": "tauri icon public/icon.svg"
+  },
+  "dependencies": {
+    "@nuxt/ui": "^4.10.0",
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-opener": "^2",
+    "tailwindcss": "^4.3.3",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@fledra/eslint-config": "^3.0.2",
+    "@tauri-apps/cli": "^2",
+    "@types/node": "^24.13.3",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "eslint": "^10.8.0",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.3",
+    "vue-tsc": "^2.1.10"
+  }
+}
