@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <UFormField label="Bind Address">
-      <UInput v-model="model.bind" />
-    </UFormField>
-  </div>
+  <Address v-model="model.bind" :default-port="443" label="Bind Address" class="w-full" />
 </template>
 
 <script setup lang="ts">

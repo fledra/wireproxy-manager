@@ -1,17 +1,19 @@
 <template>
-  <div class="flex items-center gap-4">
-    <UFormField label="Listen Port">
-      <UInput v-model="model.port" />
-    </UFormField>
-
-    <UFormField label="Target">
-      <UInput v-model="model.target" />
-    </UFormField>
-  </div>
+  <UFormField label="Listen Port" class="w-fit">
+    <UInputNumber v-model="port" :min="1" :max="65535" :format-options="{ useGrouping: false }" />
+  </UFormField>
+  <Address v-model="model.target" label="Target" class="w-full" />
 </template>
 
 <script setup lang="ts">
 import type { TCPServerTunnel } from '../../types';
 
+import { ref, watchEffect } from 'vue';
+
 const model = defineModel<TCPServerTunnel>({ required: true });
+const port = ref(1025);
+
+watchEffect(() => {
+  model.value.port = port.value;
+});
 </script>

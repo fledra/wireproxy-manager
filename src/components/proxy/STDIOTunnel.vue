@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <UFormField label="Target">
-      <UInput v-model="model.target" />
-    </UFormField>
-  </div>
+  <Address v-model="model.target" label="Target" class="w-full" />
 </template>
 
 <script setup lang="ts">

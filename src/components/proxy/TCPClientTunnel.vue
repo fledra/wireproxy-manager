@@ -1,13 +1,6 @@
 <template>
-  <div class="flex items-center gap-4">
-    <UFormField label="Bind Address">
-      <UInput v-model="model.bind" />
-    </UFormField>
-
-    <UFormField label="Target">
-      <UInput v-model="model.target" />
-    </UFormField>
-  </div>
+  <Address v-model="model.bind" label="Bind Address" class="w-full" />
+  <Address v-model="model.target" label="Target" class="w-full" />
 </template>
 
 <script setup lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-4 justify-between items-center p-4 rounded overflow-hidden hover:bg-elevated/50">
+  <div class="flex gap-4 justify-between items-center p-4 pr-0 rounded overflow-hidden">
     <span class="min-w-36">{{ info.label }}</span>
     <UTheme
       :ui="{
@@ -7,7 +7,9 @@
         formField: { root: 'w-full' },
       }"
     >
-      <component :is="info.component" v-model="model" class="w-full" />
+      <div class="flex gap-4 w-full">
+        <component :is="info.component" v-model="model" class="grow" />
+      </div>
     </UTheme>
     <UTooltip text="Delete proxy instance">
       <UButton

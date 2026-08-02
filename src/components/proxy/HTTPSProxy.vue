@@ -1,15 +1,21 @@
 <template>
   <div class="flex items-center gap-4">
-    <UFormField label="Bind Address">
-      <UInput v-model="model.bind" />
+    <Address v-model="model.bind" :default-port="443" label="Bind Address" class="w-full" />
+
+    <UFormField label="Certificate File" class="min-w-24">
+      <UInput v-model="model.certFile" :ui="{ trailing: 'pe-0.5' }">
+        <template #trailing>
+          <UButton variant="ghost" icon="i-lucide-file" size="sm" />
+        </template>
+      </UInput>
     </UFormField>
 
-    <UFormField label="Certificate File">
-      <UInput v-model="model.certFile" />
-    </UFormField>
-
-    <UFormField label="Key File">
-      <UInput v-model="model.keyFile" />
+    <UFormField label="Key File" class="min-w-24">
+      <UInput v-model="model.keyFile" :ui="{ trailing: 'pe-0.5' }">
+        <template #trailing>
+          <UButton variant="ghost" icon="i-lucide-file" size="sm" />
+        </template>
+      </UInput>
     </UFormField>
   </div>
 </template>
