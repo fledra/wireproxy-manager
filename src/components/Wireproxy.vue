@@ -33,11 +33,11 @@
         <template v-else>
           <USeparator />
           <ProxyInstance
-            v-for="proxy in proxies"
+            v-for="(proxy, idx) in proxies"
             :key="proxy.id"
             v-model="proxy.config"
             :type="proxy.type"
-            @delete="removeInstance(proxy.id)"
+            @delete="removeInstance(idx)"
           />
         </template>
       </div>
@@ -70,12 +70,8 @@ function addInstance<T extends ProxyType>(type: T) {
   proxies.value.push({ id, type, config });
 }
 
-function removeInstance(id: string) {
-  const idx = proxies.value.findIndex((p) => p.id === id);
-
-  if (idx !== -1) {
-    proxies.value.splice(idx, 1);
-  }
+function removeInstance(idx: number) {
+  proxies.value.splice(idx, 1);
 }
 
 async function toggleWireproxy() {
