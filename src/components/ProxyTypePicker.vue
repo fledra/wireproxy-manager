@@ -17,16 +17,16 @@ import type { ProxyType } from '../types';
 
 import { nextTick, ref, watch } from 'vue';
 
-import { proxyRegistry } from '../proxies';
+import { proxyRegistry } from '../utils/registry';
 
 const emit = defineEmits<{
   (e: 'select', type: ProxyType): void;
 }>();
 
-const proxyTypes = Object.entries(proxyRegistry).map(([value, { label }]) => ({
+const proxyTypes = Object.entries(proxyRegistry).map<SelectItem>(([type, { label }]) => ({
   label,
-  value,
-} satisfies SelectItem));
+  value: type,
+}));
 
 const type = ref<ProxyType>();
 
