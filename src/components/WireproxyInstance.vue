@@ -19,13 +19,26 @@
     </UCard>
 
     <template #content>
-      <div class="flex flex-col gap-4 p-4 border border-default border-t-0 rounded-bl-lg rounded-br-lg">
-        <div class="flex gap-4">
-          <UFormField label="Instance Name" orientation="horizontal" class="w-full gap-4" :ui="{ container: 'grow' }">
-            <UInput v-model="model.name" class="w-full" />
+      <div class="flex flex-col gap-4 p-4 border border-default border-t-0 rounded-b-lg">
+        <UTheme
+          :ui="{
+            formField: {
+              root: 'gap-4',
+              container: 'grow',
+              labelWrapper: 'min-w-32 justify-end',
+            },
+          }"
+        >
+          <div class="grid grid-cols-10 gap-4">
+            <UFormField label="Instance Name" orientation="horizontal" class="col-span-9">
+              <UInput v-model="model.name" placeholder="Enter instance name" class="w-full" />
+            </UFormField>
+            <ProxyTypePicker class="row-span-2 self-center" @select="addProxy" />
+            <UFormField label="Wireguard Config" orientation="horizontal" class="col-span-9">
+              <FilePicker v-model="model.wgConfig" class="w-full" />
           </UFormField>
-          <ProxyTypePicker @select="addProxy" />
         </div>
+        </UTheme>
 
         <p v-if="model.proxies.length === 0" class="py-4 text-sm text-muted text-center">
           This instance does not have any proxies
