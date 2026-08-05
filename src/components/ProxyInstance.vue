@@ -1,6 +1,6 @@
 <template>
-  <div class="flex gap-4 justify-between items-center p-4 pr-0 rounded overflow-hidden">
-    <span class="min-w-36">{{ proxy.label }}</span>
+  <div class="flex gap-4 justify-between items-center space-y-4 rounded overflow-hidden">
+    <span class="min-w-32 text-right">{{ proxy.label }}</span>
     <UTheme
       :ui="{
         input: { root: 'w-full' },
@@ -16,7 +16,6 @@
         icon="i-lucide-x"
         color="error"
         variant="ghost"
-        class="self-end"
         @click="emit('delete')"
       />
     </UTooltip>
