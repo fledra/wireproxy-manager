@@ -14,11 +14,11 @@
         </UButton>
       </div>
 
-      <Wireproxy
-        v-for="instance in instances"
-        :key="instance"
-        :instance="instance"
-        @delete="removeInstance(instance)"
+      <WireproxyInstance
+        v-for="(instance, idx) in instances"
+        :key="instance.id"
+        :model-value="instance"
+        @delete="removeWireproxyInstance(idx)"
       />
     </UMain>
   </UApp>
