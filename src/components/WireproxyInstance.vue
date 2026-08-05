@@ -4,7 +4,7 @@
       <div class="flex items-center justify-between">
         <div class="flex gap-4">
           <UChip :color="model.running ? 'success' : 'error'" standalone inset />
-          <span class="font-semibold">{{ model.name }}</span>
+          <span class="font-semibold">{{ name }}</span>
         </div>
         <div class="flex items-center gap-4">
           <UTooltip :text="`${model.running ? 'Stop' : 'Start'} instance`">
@@ -36,8 +36,8 @@
             <ProxyTypePicker class="row-span-2 self-center" @select="addProxy" />
             <UFormField label="Wireguard Config" orientation="horizontal" class="col-span-9">
               <FilePicker v-model="model.wgConfig" class="w-full" />
-          </UFormField>
-        </div>
+            </UFormField>
+          </div>
         </UTheme>
 
         <p v-if="model.proxies.length === 0" class="py-4 text-sm text-muted text-center">
@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import type { ProxyType, WireproxyInstance } from '../types';
 
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 import { createProxyInstance } from '../utils/proxy';
 
@@ -70,6 +70,7 @@ const emit = defineEmits<{
 }>();
 
 const model = defineModel<WireproxyInstance>({ required: true });
+const name = computed(() => model.value.name || '(unnamed instance)');
 const busy = ref(false);
 
 function addProxy(type: ProxyType) {
