@@ -32,26 +32,25 @@ export interface SNIProxy {
   BindAddress: string;
 }
 
-export interface WireproxyConfig {
-  tcpClient: TCPClientTunnel[];
-  tcpServer: TCPServerTunnel[];
-  stdio: STDIOTunnel[];
-  socks: SOCKS5Proxy[];
-  http: HTTPProxy[];
-  https: HTTPSProxy[];
-  sni: SNIProxy[];
-}
-
-export type ProxyType = keyof WireproxyConfig;
-export type ProxyConfig<T extends ProxyType = ProxyType> = WireproxyConfig[T][number];
-
-export interface ProxyInstance<T extends ProxyType = ProxyType> {
+export type ProxyInstance = {
   id: string;
-  type: T;
-  config: ProxyConfig<T>;
-}
+} & (
+  | { type: 'TCPClientTunnel'; config: TCPClientTunnel }
+  | { type: 'TCPServerTunnel'; config: TCPServerTunnel }
+  | { type: 'STDIOTunnel'; config: STDIOTunnel }
+  | { type: 'Socks5'; config: SOCKS5Proxy }
+  | { type: 'http'; config: HTTPProxy }
+  | { type: 'https'; config: HTTPSProxy }
+  | { type: 'SNI'; config: SNIProxy }
+);
+
+export type ProxyType = ProxyInstance['type'];
+export type ProxyConfig<T extends ProxyType = ProxyType> = Extract<ProxyInstance, { type: T }>['config'];
 
 export interface WireproxyInstance {
   id: string;
-  config: WireproxyConfig;
+  name?: string;
+  running: boolean;
+  wgConfig: string;
+  proxies: ProxyInstance[];
 }
