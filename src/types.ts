@@ -1,35 +1,35 @@
 export interface TCPClientTunnel {
-  target: string;
-  bind: string;
+  Target: string;
+  BindAddress: string;
 }
 
 export interface TCPServerTunnel {
-  target: string;
-  port: number;
+  Target: string;
+  Port: number;
 }
 
 export interface STDIOTunnel {
-  target: string;
+  Target: string;
 }
 
 export interface SOCKS5Proxy {
-  bind: string;
+  BindAddress: string;
 }
 
 export interface HTTPProxy {
-  bind: string;
-  username?: string;
-  password?: string;
+  BindAddress: string;
+  Username?: string;
+  Password?: string;
 }
 
 export interface HTTPSProxy {
-  bind: string;
-  certFile: string;
-  keyFile: string;
+  BindAddress: string;
+  CertFile: string;
+  KeyFile: string;
 }
 
 export interface SNIProxy {
-  bind: string;
+  BindAddress: string;
 }
 
 export interface WireproxyConfig {
