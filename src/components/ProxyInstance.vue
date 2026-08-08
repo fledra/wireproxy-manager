@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
       <span class="font-medium text-primary">{{ proxy.label }}</span>
       <UTooltip text="Delete proxy instance">
-        <UButton color="error" variant="soft" @click="emit('delete')">
+        <UButton color="error" variant="soft" :disabled="props.disabled" @click="emit('delete')">
           Delete instance
         </UButton>
       </UTooltip>
@@ -16,7 +16,7 @@
           input: { root: 'min-w-24 w-full' },
         }"
       >
-        <component :is="proxy.component" v-model="(model as any)" :port-error="props.portError" />
+        <component :is="proxy.component" v-model="(model as any)" :port-error="props.portError" :disabled="props.disabled" />
       </UTheme>
     </div>
   </div>
@@ -32,6 +32,7 @@ import { proxyRegistry } from '../utils/registry';
 const props = defineProps<{
   type: ProxyType;
   portError?: boolean;
+  disabled?: boolean;
 }>();
 
 const emit = defineEmits<{

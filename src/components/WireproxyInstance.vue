@@ -13,7 +13,7 @@
             <UButton :icon="model.running ? 'i-lucide-pause' : 'i-lucide-play'" variant="ghost" :loading="busy" @click.stop="toggleWireproxy" />
           </UTooltip>
           <UTooltip text="Delete instance">
-            <UButton icon="i-lucide-x" variant="ghost" color="error" @click.stop="emit('delete')" />
+            <UButton icon="i-lucide-x" variant="ghost" color="error" :disabled="disabled" @click.stop="emit('delete')" />
           </UTooltip>
           <UIcon name="i-lucide-chevron-down" class="group-data-[state=open]:rotate-180 transition-transform duration-200" size="24" />
         </div>
@@ -34,13 +34,13 @@
           }"
         >
           <UFormField label="Instance Name" orientation="horizontal">
-            <UInput v-model="model.name" placeholder="Enter instance name" />
+            <UInput v-model="model.name" placeholder="Enter instance name" :disabled="disabled" />
           </UFormField>
           <UFormField label="Wireproxy Path" orientation="horizontal">
-            <FilePicker v-model="model.wireproxyPath" />
+            <FilePicker v-model="model.wireproxyPath" :disabled="disabled" />
           </UFormField>
           <UFormField label="Wireguard Config" orientation="horizontal">
-            <FilePicker v-model="model.wgConfigPath" :filters="[{ name: '', extensions: ['conf'] }]" />
+            <FilePicker v-model="model.wgConfigPath" :disabled="disabled" :filters="[{ name: '', extensions: ['conf'] }]" />
           </UFormField>
         </UTheme>
 
@@ -48,10 +48,10 @@
           <p class="text-sm text-muted text-center">
             This instance does not have any proxies
           </p>
-          <ProxyTypePicker class="flex mx-auto" @select="addProxy" />
+          <ProxyTypePicker class="flex mx-auto" :disabled="disabled" @select="addProxy" />
         </template>
         <template v-else>
-          <ProxyTypePicker class="flex ml-auto" @select="addProxy" />
+          <ProxyTypePicker class="flex ml-auto" :disabled="disabled" @select="addProxy" />
           <USeparator />
           <ProxyInstance
             v-for="(proxy, idx) in model.proxies"
@@ -59,6 +59,7 @@
             v-model="proxy.config"
             :type="proxy.type"
             :port-error="usedPorts[idx]"
+            :disabled="disabled"
             @delete="removeProxy(idx)"
           />
         </template>
@@ -83,8 +84,10 @@ const emit = defineEmits<{
 }>();
 
 const model = defineModel<WireproxyInstance>({ required: true });
-const name = computed(() => model.value.name || '(unnamed instance)');
+
 const busy = ref(false);
+const name = computed(() => model.value.name || '(unnamed instance)');
+const disabled = computed(() => busy.value || model.value.running);
 
 function addProxy(type: ProxyType) {
   const proxy = createProxyInstance(type);

@@ -1,7 +1,19 @@
 <template>
   <UFieldGroup>
-    <UInput v-model="model" placeholder="No file selected" :ui="{ base: 'group-not-only:group-last:rounded-s-md' }" />
-    <UButton trailing-icon="i-lucide-file" variant="subtle" size="sm" class="whitespace-nowrap" @click="openDialog">
+    <UInput
+      v-model="model"
+      placeholder="No file selected"
+      :disabled="props.disabled"
+      :ui="{ base: 'group-not-only:group-last:rounded-s-md' }"
+    />
+    <UButton
+      trailing-icon="i-lucide-file"
+      variant="subtle"
+      size="sm"
+      class="whitespace-nowrap"
+      :disabled="props.disabled"
+      @click="openDialog"
+    >
       Choose file
     </UButton>
   </UFieldGroup>
@@ -12,7 +24,11 @@ import type { DialogFilter } from '@tauri-apps/plugin-dialog';
 
 import { open } from '@tauri-apps/plugin-dialog';
 
-const props = defineProps<{ filters?: DialogFilter[] }>();
+const props = defineProps<{
+  filters?: DialogFilter[];
+  disabled?: boolean;
+}>();
+
 const model = defineModel<string>();
 
 async function openDialog() {

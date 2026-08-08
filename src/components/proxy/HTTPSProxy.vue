@@ -2,17 +2,17 @@
   <Address v-model="model.BindAddress" :default-port="443" label="Bind Address" :port-error="props.portError" />
 
   <UFormField label="Certificate File" class="grow">
-    <FilePicker v-model="model.CertFile" :filters="[{ name: '', extensions: ['crt'] }]" />
+    <FilePicker v-model="model.CertFile" :filters="[{ name: '', extensions: ['crt'] }]" :disabled="props.disabled" />
   </UFormField>
 
   <UFormField label="Key File" class="grow">
-    <FilePicker v-model="model.KeyFile" :filters="[{ name: '', extensions: ['key'] }]" />
+    <FilePicker v-model="model.KeyFile" :filters="[{ name: '', extensions: ['key'] }]" :disabled="props.disabled" />
   </UFormField>
 </template>
 
 <script setup lang="ts">
 import type { HTTPSProxy } from '../../types';
 
-const props = defineProps<{ portError?: boolean }>();
+const props = defineProps<{ portError?: boolean; disabled?: boolean }>();
 const model = defineModel<HTTPSProxy>({ required: true });
 </script>

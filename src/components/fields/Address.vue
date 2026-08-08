@@ -1,9 +1,9 @@
 <template>
   <UForm :schema="schema" :state="state" class="flex max-[505px]:flex-col gap-4 grow">
     <UFormField :label="props.label" name="addr" class="grow">
-      <UInput v-model.trim="state.addr" />
+      <UInput v-model.trim="state.addr" :disabled="props.disabled" />
     </UFormField>
-    <PortInput v-model="state.port" name="port" :error="error" />
+    <PortInput v-model="state.port" name="port" :error="error" :disabled="props.disabled" />
   </UForm>
 </template>
 
@@ -15,6 +15,7 @@ const props = defineProps<{
   label?: string;
   defaultPort?: number;
   portError?: boolean;
+  disabled?: boolean;
 }>();
 
 const model = defineModel<string>();
