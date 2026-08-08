@@ -5,6 +5,7 @@
       :ui="{
         input: { root: 'w-full' },
         formField: { root: 'w-full' },
+        fieldGroup: { base: 'w-full' },
       }"
     >
       <div class="flex gap-4 w-full">

@@ -22,6 +22,8 @@
       <div class="flex flex-col gap-4 p-4 border border-default border-t-0 rounded-b-lg">
         <UTheme
           :ui="{
+            input: { root: 'w-full' },
+            fieldGroup: { base: 'w-full' },
             formField: {
               root: 'gap-4',
               container: 'grow',
@@ -29,14 +31,16 @@
             },
           }"
         >
-          <div class="grid grid-cols-10 gap-4">
-            <UFormField label="Instance Name" orientation="horizontal" class="col-span-9">
-              <UInput v-model="model.name" placeholder="Enter instance name" class="w-full" />
-            </UFormField>
-            <ProxyTypePicker class="row-span-2 self-center" @select="addProxy" />
-            <UFormField label="Wireguard Config" orientation="horizontal" class="col-span-9">
-              <FilePicker v-model="model.wgConfig" class="w-full" />
-            </UFormField>
+          <div class="flex gap-4">
+            <div class="grow space-y-4">
+              <UFormField label="Instance Name" orientation="horizontal">
+                <UInput v-model="model.name" placeholder="Enter instance name" />
+              </UFormField>
+              <UFormField label="Wireguard Config" orientation="horizontal">
+                <FilePicker v-model="model.wgConfig" />
+              </UFormField>
+            </div>
+            <ProxyTypePicker class="self-center" @select="addProxy" />
           </div>
         </UTheme>
 
