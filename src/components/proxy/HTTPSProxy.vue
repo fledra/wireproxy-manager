@@ -1,5 +1,5 @@
 <template>
-  <Address v-model="model.BindAddress" :default-port="443" label="Bind Address" />
+  <Address v-model="model.BindAddress" :default-port="443" label="Bind Address" :port-error="props.portError" />
 
   <UFormField label="Certificate File" class="grow">
     <FilePicker v-model="model.CertFile" :filters="[{ name: '', extensions: ['crt'] }]" />
@@ -13,5 +13,6 @@
 <script setup lang="ts">
 import type { HTTPSProxy } from '../../types';
 
+const props = defineProps<{ portError?: boolean }>();
 const model = defineModel<HTTPSProxy>({ required: true });
 </script>

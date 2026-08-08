@@ -16,7 +16,7 @@
           input: { root: 'min-w-24 w-full' },
         }"
       >
-        <component :is="proxy.component" v-model="(model as any)" />
+        <component :is="proxy.component" v-model="(model as any)" :port-error="props.portError" />
       </UTheme>
     </div>
   </div>
@@ -31,6 +31,7 @@ import { proxyRegistry } from '../utils/registry';
 
 const props = defineProps<{
   type: ProxyType;
+  portError?: boolean;
 }>();
 
 const emit = defineEmits<{

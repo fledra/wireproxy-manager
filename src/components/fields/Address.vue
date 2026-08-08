@@ -3,16 +3,22 @@
     <UFormField :label="props.label" name="addr" class="grow">
       <UInput v-model.trim="state.addr" />
     </UFormField>
-    <PortInput v-model="state.port" name="port" />
+    <PortInput v-model="state.port" name="port" :error="error" />
   </UForm>
 </template>
 
 <script setup lang="ts">
-import { reactive, watchEffect } from 'vue';
+import { computed, reactive, watchEffect } from 'vue';
 import z from 'zod';
 
-const props = defineProps<{ label?: string; defaultPort?: number }>();
+const props = defineProps<{
+  label?: string;
+  defaultPort?: number;
+  portError?: boolean;
+}>();
+
 const model = defineModel<string>();
+const error = computed(() => props.portError ? 'Port in use' : undefined);
 
 const schema = z.object({
   addr: z.union(

@@ -1,5 +1,5 @@
 <template>
-  <Address v-model="model.BindAddress" :default-port="80" label="Bind Address" />
+  <Address v-model="model.BindAddress" :default-port="80" label="Bind Address" :error="props.portError" />
 
   <UFormField label="Username">
     <UInput v-model="model.Username" />
@@ -13,5 +13,6 @@
 <script setup lang="ts">
 import type { HTTPProxy } from '../../types';
 
+const props = defineProps<{ portError?: boolean }>();
 const model = defineModel<HTTPProxy>({ required: true });
 </script>

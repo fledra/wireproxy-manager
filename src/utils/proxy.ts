@@ -19,3 +19,15 @@ export function createProxyInstance(type: ProxyType): ProxyInstance {
       return { id, type, config: { BindAddress: '' } };
   }
 }
+
+export function getBindAddressPort(bindAddress: string) {
+  return Number.parseInt(bindAddress.split(':')[1]);
+}
+
+export function getProxyInstancePort(proxy: ProxyInstance): number {
+  if (proxy.type === 'TCPServerTunnel') {
+    return proxy.config.Port;
+  } else {
+    return getBindAddressPort(proxy.config.BindAddress);
+  }
+}

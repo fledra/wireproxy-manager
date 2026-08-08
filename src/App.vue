@@ -16,6 +16,7 @@
         v-for="(instance, idx) in instances"
         :key="instance.id"
         :model-value="instance"
+        :used-ports="usedPorts[idx]"
         @delete="removeWireproxyInstance(idx)"
       />
     </UMain>
@@ -26,9 +27,23 @@
 import type { WireproxyInstance } from './types';
 
 import { nanoid } from 'nanoid';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+
+import { getProxyInstancePort } from './utils/proxy';
 
 const instances = ref<WireproxyInstance[]>([]);
+const usedPorts = computed(() => {
+  const ports = new Map<number, number>();
+
+  for (const instance of instances.value) {
+    for (const proxy of instance.proxies) {
+      const port = getProxyInstancePort(proxy);
+      ports.set(port, (ports.get(port) ?? 0) + 1);
+    }
+  }
+
+  return instances.value.map((instance) => instance.proxies.map((proxy) => (ports.get(getProxyInstancePort(proxy)) ?? 0) > 1));
+});
 
 function addWireproxyInstance() {
   const id = nanoid();

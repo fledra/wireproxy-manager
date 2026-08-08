@@ -58,6 +58,7 @@
             :key="proxy.id"
             v-model="proxy.config"
             :type="proxy.type"
+            :port-error="usedPorts[idx]"
             @delete="removeProxy(idx)"
           />
         </template>
@@ -72,6 +73,10 @@ import type { ProxyType, WireproxyInstance } from '../types';
 import { computed, ref } from 'vue';
 
 import { createProxyInstance } from '../utils/proxy';
+
+const { usedPorts = [] } = defineProps<{
+  usedPorts?: boolean[];
+}>();
 
 const emit = defineEmits<{
   (e: 'delete'): void;
