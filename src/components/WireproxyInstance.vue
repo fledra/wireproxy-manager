@@ -44,8 +44,6 @@
           </UFormField>
         </UTheme>
 
-        <USeparator />
-
         <template v-if="model.proxies.length === 0">
           <p class="text-sm text-muted text-center">
             This instance does not have any proxies
@@ -54,15 +52,14 @@
         </template>
         <template v-else>
           <ProxyTypePicker class="flex ml-auto" @select="addProxy" />
-          <div class="flex flex-col gap-2">
-            <ProxyInstance
-              v-for="(proxy, idx) in model.proxies"
-              :key="proxy.id"
-              v-model="proxy.config"
-              :type="proxy.type"
-              @delete="removeProxy(idx)"
-            />
-          </div>
+          <USeparator />
+          <ProxyInstance
+            v-for="(proxy, idx) in model.proxies"
+            :key="proxy.id"
+            v-model="proxy.config"
+            :type="proxy.type"
+            @delete="removeProxy(idx)"
+          />
         </template>
       </div>
     </template>

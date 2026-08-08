@@ -1,9 +1,17 @@
 <template>
-  <div class="flex items-center gap-4 p-2 rounded hover:bg-elevated/50">
-    <span class="min-w-29 text-right font-medium text-sm">{{ proxy.label }}</span>
-    <div class="flex max-[728px]:flex-col gap-4 pb-1 grow overflow-auto">
+  <div class="space-y-4">
+    <div class="flex justify-between items-center">
+      <span class="font-medium text-primary">{{ proxy.label }}</span>
+      <UTooltip text="Delete proxy instance">
+        <UButton color="error" variant="soft" @click="emit('delete')">
+          Delete instance
+        </UButton>
+      </UTooltip>
+    </div>
+    <div class="flex flex-col gap-4 pb-1 grow overflow-auto">
       <UTheme
         :ui="{
+          fieldGroup: { base: 'w-full' },
           inputNumber: { base: 'w-30' },
           input: { root: 'min-w-24 w-full' },
         }"
@@ -11,14 +19,6 @@
         <component :is="proxy.component" v-model="(model as any)" />
       </UTheme>
     </div>
-    <UTooltip text="Delete proxy instance">
-      <UButton
-        icon="i-lucide-x"
-        color="error"
-        variant="ghost"
-        @click="emit('delete')"
-      />
-    </UTooltip>
   </div>
 </template>
 

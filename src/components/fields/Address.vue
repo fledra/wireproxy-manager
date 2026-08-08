@@ -1,7 +1,7 @@
 <template>
   <UForm :schema="schema" :state="state" class="flex max-[505px]:flex-col gap-4 grow">
     <UFormField :label="props.label" name="addr" class="grow">
-      <UInput v-model.trim="state.addr" class="" />
+      <UInput v-model.trim="state.addr" />
     </UFormField>
     <PortInput v-model="state.port" name="port" />
   </UForm>
