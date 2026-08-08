@@ -36,8 +36,11 @@
               <UFormField label="Instance Name" orientation="horizontal">
                 <UInput v-model="model.name" placeholder="Enter instance name" />
               </UFormField>
+              <UFormField label="Wireproxy Path" orientation="horizontal">
+                <FilePicker v-model="model.wireproxyPath" />
+              </UFormField>
               <UFormField label="Wireguard Config" orientation="horizontal">
-                <FilePicker v-model="model.wgConfig" />
+                <FilePicker v-model="model.wgConfigPath" />
               </UFormField>
             </div>
             <ProxyTypePicker class="self-center" @select="addProxy" />

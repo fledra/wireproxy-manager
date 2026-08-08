@@ -9,7 +9,7 @@ export function serializeProxyInstance(instance: ProxyInstance) {
 }
 
 export function serializeWireproxyInstance(instance: WireproxyInstance) {
-  let config = `WGConfig = ${instance.wgConfig}\n`;
+  let config = `WGConfig = ${instance.wgConfigPath}\n`;
   for (const proxy of instance.proxies) {
     config += `${serializeProxyInstance(proxy)}\n`;
   }

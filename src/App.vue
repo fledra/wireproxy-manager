@@ -38,12 +38,13 @@ function addWireproxyInstance() {
     id,
     name: 'Instance',
     running: false,
-    wgConfig: '',
+    wireproxyPath: '',
+    wgConfigPath: '',
     proxies: [],
   });
 }
 
 function removeWireproxyInstance(idx: number) {
-    instances.value.splice(idx, 1);
+  instances.value.splice(idx, 1);
 }
 </script>

@@ -51,6 +51,7 @@ export interface WireproxyInstance {
   id: string;
   name?: string;
   running: boolean;
-  wgConfig: string;
+  wgConfigPath: string;
+  wireproxyPath: string;
   proxies: ProxyInstance[];
 }
