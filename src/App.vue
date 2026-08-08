@@ -1,6 +1,6 @@
 <template>
   <UApp>
-    <UMain class="flex flex-col gap-4 p-4">
+    <UMain class="space-y-4 p-4">
       <UEmpty v-if="instances.length === 0" description="There are no Wireproxy instances yet">
         <template #actions>
           <UButton leading-icon="i-lucide-plus" @click="addWireproxyInstance">
@@ -8,11 +8,9 @@
           </UButton>
         </template>
       </UEmpty>
-      <div v-else class="ml-auto">
-        <UButton leading-icon="i-lucide-plus" @click="addWireproxyInstance">
-          Add instance
-        </UButton>
-      </div>
+      <UButton v-else class="flex ml-auto" leading-icon="i-lucide-plus" @click="addWireproxyInstance">
+        Add instance
+      </UButton>
 
       <WireproxyInstance
         v-for="(instance, idx) in instances"

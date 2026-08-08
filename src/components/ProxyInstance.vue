@@ -1,17 +1,16 @@
 <template>
-  <div class="flex gap-4 justify-between items-center space-y-4 rounded overflow-hidden">
-    <span class="min-w-32 text-right">{{ proxy.label }}</span>
-    <UTheme
-      :ui="{
-        input: { root: 'w-full' },
-        formField: { root: 'w-full' },
-        fieldGroup: { base: 'w-full' },
-      }"
-    >
-      <div class="flex gap-4 w-full">
+  <div class="flex items-center gap-4 p-2 rounded hover:bg-elevated/50">
+    <span class="min-w-29 text-right font-medium text-sm">{{ proxy.label }}</span>
+    <div class="flex max-[728px]:flex-col gap-4 pb-1 grow overflow-auto">
+      <UTheme
+        :ui="{
+          inputNumber: { base: 'w-30' },
+          input: { root: 'min-w-24 w-full' },
+        }"
+      >
         <component :is="proxy.component" v-model="(model as any)" />
-      </div>
-    </UTheme>
+      </UTheme>
+    </div>
     <UTooltip text="Delete proxy instance">
       <UButton
         icon="i-lucide-x"

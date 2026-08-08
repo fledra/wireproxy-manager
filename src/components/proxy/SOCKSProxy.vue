@@ -1,5 +1,5 @@
 <template>
-  <Address v-model="model.BindAddress" label="Bind Address" class="w-full" />
+  <Address v-model="model.BindAddress" label="Bind Address" />
 </template>
 
 <script setup lang="ts">

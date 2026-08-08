@@ -1,11 +1,11 @@
 <template>
-  <Address v-model="model.BindAddress" :default-port="80" label="Bind Address" class="w-full" />
+  <Address v-model="model.BindAddress" :default-port="80" label="Bind Address" />
 
-  <UFormField label="Username" class="min-w-24 max-w-64">
+  <UFormField label="Username">
     <UInput v-model="model.Username" />
   </UFormField>
 
-  <UFormField label="Password" class="min-w-24 max-w-64">
+  <UFormField label="Password">
     <UInput v-model="model.Password" />
   </UFormField>
 </template>

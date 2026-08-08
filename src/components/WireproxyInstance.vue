@@ -21,7 +21,7 @@
     </UCard>
 
     <template #content>
-      <div class="flex flex-col gap-4 p-4 border border-default border-t-0 rounded-b-lg">
+      <div class="p-4 space-y-4 border border-default border-t-0 rounded-b-lg overflow-hidden">
         <UTheme
           :ui="{
             input: { root: 'w-full' },
@@ -29,38 +29,39 @@
             formField: {
               root: 'gap-4',
               container: 'grow',
-              labelWrapper: 'min-w-32 justify-end',
+              labelWrapper: 'min-w-29 justify-end',
             },
           }"
         >
-          <div class="flex gap-4">
-            <div class="grow space-y-4">
-              <UFormField label="Instance Name" orientation="horizontal">
-                <UInput v-model="model.name" placeholder="Enter instance name" />
-              </UFormField>
-              <UFormField label="Wireproxy Path" orientation="horizontal">
-                <FilePicker v-model="model.wireproxyPath" />
-              </UFormField>
-              <UFormField label="Wireguard Config" orientation="horizontal">
-                <FilePicker v-model="model.wgConfigPath" />
-              </UFormField>
-            </div>
-            <ProxyTypePicker class="self-center" @select="addProxy" />
-          </div>
+          <UFormField label="Instance Name" orientation="horizontal">
+            <UInput v-model="model.name" placeholder="Enter instance name" />
+          </UFormField>
+          <UFormField label="Wireproxy Path" orientation="horizontal">
+            <FilePicker v-model="model.wireproxyPath" />
+          </UFormField>
+          <UFormField label="Wireguard Config" orientation="horizontal">
+            <FilePicker v-model="model.wgConfigPath" />
+          </UFormField>
         </UTheme>
 
-        <p v-if="model.proxies.length === 0" class="py-4 text-sm text-muted text-center">
-          This instance does not have any proxies
-        </p>
+        <template v-if="model.proxies.length === 0">
+          <p class="text-sm text-muted text-center">
+            This instance does not have any proxies
+          </p>
+          <ProxyTypePicker class="flex mx-auto" @select="addProxy" />
+        </template>
         <template v-else>
           <USeparator />
-          <ProxyInstance
-            v-for="(proxy, idx) in model.proxies"
-            :key="proxy.id"
-            v-model="proxy.config"
-            :type="proxy.type"
-            @delete="removeProxy(idx)"
-          />
+          <ProxyTypePicker class="flex ml-auto" @select="addProxy" />
+          <div class="flex flex-col gap-2">
+            <ProxyInstance
+              v-for="(proxy, idx) in model.proxies"
+              :key="proxy.id"
+              v-model="proxy.config"
+              :type="proxy.type"
+              @delete="removeProxy(idx)"
+            />
+          </div>
         </template>
       </div>
     </template>

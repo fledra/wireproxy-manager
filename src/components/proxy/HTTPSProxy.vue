@@ -1,11 +1,11 @@
 <template>
-  <Address v-model="model.BindAddress" :default-port="443" label="Bind Address" class="w-full" />
+  <Address v-model="model.BindAddress" :default-port="443" label="Bind Address" />
 
-  <UFormField label="Certificate File" class="min-w-24">
+  <UFormField label="Certificate File">
     <FilePicker v-model="model.CertFile" />
   </UFormField>
 
-  <UFormField label="Key File" class="min-w-24">
+  <UFormField label="Key File">
     <FilePicker v-model="model.KeyFile" />
   </UFormField>
 </template>

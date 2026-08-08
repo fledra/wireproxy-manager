@@ -1,16 +1,10 @@
 <template>
-  <div class="flex flex-col grow">
-    <UForm :schema="schema" :state="state" class="flex items-center gap-4">
-      <UFormField :label="props.label" name="bind" class="min-w-24">
-        <UInput v-model.trim="state.addr" />
-      </UFormField>
-      <div>
-        <UFormField label="Port" name="port" class="min-w-28">
-          <UInputNumber v-model="state.port" :min="1" :max="65535" :format-options="{ useGrouping: false }" />
-        </UFormField>
-      </div>
-    </UForm>
-  </div>
+  <UForm :schema="schema" :state="state" class="flex max-[505px]:flex-col gap-4 grow">
+    <UFormField :label="props.label" name="addr" class="grow">
+      <UInput v-model.trim="state.addr" class="" />
+    </UFormField>
+    <PortInput v-model="state.port" name="port" />
+  </UForm>
 </template>
 
 <script setup lang="ts">
@@ -27,12 +21,12 @@ const schema = z.object({
       z.ipv4(),
       z.ipv6(),
     ],
-    { error: `${props.label} is not a valid domain or an IPv4 or IPv6 address` },
+    { error: 'Invalid domain or an IPv4 or IPv6 address' },
   ),
   port: z.number().min(1).max(65535),
 });
 
-const state = reactive<Partial<z.output<typeof schema>>>({
+const state = reactive<z.output<typeof schema>>({
   addr: '127.0.0.1',
   port: props.defaultPort ?? 1025,
 });

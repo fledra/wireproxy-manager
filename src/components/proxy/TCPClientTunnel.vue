@@ -1,6 +1,6 @@
 <template>
-  <Address v-model="model.BindAddress" label="Bind Address" class="w-full" />
-  <Address v-model="model.Target" label="Target" class="w-full" />
+  <Address v-model="model.BindAddress" label="Bind Address" />
+  <Address v-model="model.Target" label="Target" />
 </template>
 
 <script setup lang="ts">

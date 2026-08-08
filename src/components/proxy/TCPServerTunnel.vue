@@ -1,8 +1,6 @@
 <template>
-  <UFormField label="Listen Port" class="w-fit">
-    <UInputNumber v-model="port" :min="1" :max="65535" :format-options="{ useGrouping: false }" />
-  </UFormField>
-  <Address v-model="model.Target" label="Target" class="w-full" />
+  <PortInput v-model="port" label="Listen Port" />
+  <Address v-model="model.Target" label="Target" />
 </template>
 
 <script setup lang="ts">
