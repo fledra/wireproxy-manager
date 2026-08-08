@@ -8,10 +8,6 @@ export interface TCPServerTunnel {
   Port: number;
 }
 
-export interface STDIOTunnel {
-  Target: string;
-}
-
 export interface SOCKS5Proxy {
   BindAddress: string;
 }
@@ -37,7 +33,6 @@ export type ProxyInstance = {
 } & (
   | { type: 'TCPClientTunnel'; config: TCPClientTunnel }
   | { type: 'TCPServerTunnel'; config: TCPServerTunnel }
-  | { type: 'STDIOTunnel'; config: STDIOTunnel }
   | { type: 'Socks5'; config: SOCKS5Proxy }
   | { type: 'http'; config: HTTPProxy }
   | { type: 'https'; config: HTTPSProxy }

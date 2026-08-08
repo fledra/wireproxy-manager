@@ -6,7 +6,6 @@ import HTTPProxy from '../components/proxy/HTTPProxy.vue';
 import HTTPSProxy from '../components/proxy/HTTPSProxy.vue';
 import SNIProxy from '../components/proxy/SNIProxy.vue';
 import SOCKSProxy from '../components/proxy/SOCKSProxy.vue';
-import STDIOTunnel from '../components/proxy/STDIOTunnel.vue';
 import TCPClientTunnel from '../components/proxy/TCPClientTunnel.vue';
 import TCPServerTunnel from '../components/proxy/TCPServerTunnel.vue';
 
@@ -18,10 +17,6 @@ export const proxyRegistry = {
   TCPServerTunnel: {
     label: 'TCP Server Tunnel',
     component: TCPServerTunnel,
-  },
-  STDIOTunnel: {
-    label: 'STDIO Tunnel',
-    component: STDIOTunnel,
   },
   Socks5: {
     label: 'SOCKS5 Proxy',
