@@ -40,7 +40,7 @@
             <FilePicker v-model="model.wireproxyPath" />
           </UFormField>
           <UFormField label="Wireguard Config" orientation="horizontal">
-            <FilePicker v-model="model.wgConfigPath" />
+            <FilePicker v-model="model.wgConfigPath" :filters="[{ name: '', extensions: ['conf'] }]" />
           </UFormField>
         </UTheme>
 

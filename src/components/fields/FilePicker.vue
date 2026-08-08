@@ -8,14 +8,18 @@
 </template>
 
 <script setup lang="ts">
+import type { DialogFilter } from '@tauri-apps/plugin-dialog';
+
 import { open } from '@tauri-apps/plugin-dialog';
 
+const props = defineProps<{ filters?: DialogFilter[] }>();
 const model = defineModel<string>();
 
 async function openDialog() {
   const path = await open({
     multiple: false,
     directory: false,
+    filters: props.filters ?? [],
   });
 
   if (path) {
