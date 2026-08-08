@@ -1,6 +1,9 @@
 <template>
   <UCollapsible class="flex flex-col group">
-    <UCard variant="soft" class="grow transition-all hover:bg-elevated/80 group-data-[state=open]:rounded-bl-none group-data-[state=open]:rounded-br-none">
+    <UCard
+      variant="soft"
+      class="grow transition-all hover:bg-elevated/80 group-data-[state=open]:rounded-bl-none group-data-[state=open]:rounded-br-none"
+    >
       <div class="flex items-center gap-1 max-[330px]:flex-col overflow-hidden">
         <div class="flex gap-4 grow truncate text-clip max-[330px]:self-start">
           <UChip :color="model.running ? 'success' : 'error'" standalone inset />
@@ -10,12 +13,28 @@
         </div>
         <div class="flex items-center gap-2">
           <UTooltip :text="`${model.running ? 'Stop' : 'Start'} instance`">
-            <UButton :icon="model.running ? 'i-lucide-pause' : 'i-lucide-play'" variant="ghost" :loading="busy" @click.stop="toggleWireproxy" />
+            <UButton
+              variant="ghost"
+              :icon="model.running ? 'i-lucide-pause' : 'i-lucide-play'"
+              :loading="busy"
+              :disabled="usedPorts.includes(true)"
+              @click.stop="toggleWireproxy"
+            />
           </UTooltip>
           <UTooltip text="Delete instance">
-            <UButton icon="i-lucide-x" variant="ghost" color="error" :disabled="disabled" @click.stop="emit('delete')" />
+            <UButton
+              icon="i-lucide-x"
+              variant="ghost"
+              color="error"
+              :disabled="disabled"
+              @click.stop="emit('delete')"
+            />
           </UTooltip>
-          <UIcon name="i-lucide-chevron-down" class="group-data-[state=open]:rotate-180 transition-transform duration-200" size="24" />
+          <UIcon
+            name="i-lucide-chevron-down"
+            class="group-data-[state=open]:rotate-180 transition-transform duration-200"
+            size="24"
+          />
         </div>
       </div>
     </UCard>
@@ -40,7 +59,11 @@
             <FilePicker v-model="model.wireproxyPath" :disabled="disabled" />
           </UFormField>
           <UFormField label="Wireguard Config" orientation="horizontal">
-            <FilePicker v-model="model.wgConfigPath" :disabled="disabled" :filters="[{ name: '', extensions: ['conf'] }]" />
+            <FilePicker
+              v-model="model.wgConfigPath"
+              :disabled="disabled"
+              :filters="[{ name: '', extensions: ['conf'] }]"
+            />
           </UFormField>
         </UTheme>
 
