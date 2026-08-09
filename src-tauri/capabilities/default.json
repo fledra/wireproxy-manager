@@ -6,6 +6,20 @@
   "permissions": [
     "core:default",
     "opener:default",
-    "dialog:allow-open"
+    "dialog:allow-open",
+    "fs:default",
+    "fs:read-dirs",
+    "fs:allow-read-text-file",
+    "fs:allow-write-text-file",
+    "fs:allow-remove",
+    "shell:default",
+    {
+      "identifier": "fs:scope",
+      "allow": [
+        { "path": "$APPDATA/wireproxy-manager.config.json" },
+        { "path": "$APPDATA/configs" },
+        { "path": "$APPDATA/configs/*" }
+      ]
+    }
   ]
 }

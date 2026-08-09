@@ -5,13 +5,13 @@ export function serializeProxyInstance(instance: ProxyInstance) {
   for (const [key, value] of Object.entries(instance.config)) {
     config += `${key} = ${value}\n`;
   }
-  return config.trim();
+  return config;
 }
 
 export function serializeWireproxyInstance(instance: WireproxyInstance) {
   let config = `WGConfig = ${instance.wgConfigPath}\n`;
   for (const proxy of instance.proxies) {
-    config += `${serializeProxyInstance(proxy)}\n`;
+    config += `${serializeProxyInstance(proxy)}`;
   }
-  return config.trim();
+  return config;
 }

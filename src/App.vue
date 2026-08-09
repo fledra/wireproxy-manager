@@ -26,10 +26,11 @@
 <script setup lang="ts">
 import type { WireproxyInstance } from './types';
 
-import { nanoid } from 'nanoid';
-import { computed, ref } from 'vue';
+import { computed, onBeforeMount, ref, watch } from 'vue';
 
+import { readConfig, writeConfig } from './utils/config';
 import { getProxyInstancePort } from './utils/proxy';
+import { createWireproxyInstance, deleteWireproxyInstance } from './utils/wireproxy';
 
 const instances = ref<WireproxyInstance[]>([]);
 const usedPorts = computed(() => {
@@ -45,19 +46,31 @@ const usedPorts = computed(() => {
   return instances.value.map((instance) => instance.proxies.map((proxy) => (ports.get(getProxyInstancePort(proxy)) ?? 0) > 1));
 });
 
+onBeforeMount(async () => {
+  try {
+    const config = await readConfig();
+    instances.value = config.instances;
+  } catch {
+    instances.value = [];
+  }
+});
+
 function addWireproxyInstance() {
-  const id = nanoid();
-  instances.value.push({
-    id,
-    name: 'Instance',
-    running: false,
-    wireproxyPath: '',
-    wgConfigPath: '',
-    proxies: [],
-  });
+  const instance = createWireproxyInstance();
+  instances.value.push(instance);
 }
 
-function removeWireproxyInstance(idx: number) {
+async function removeWireproxyInstance(idx: number) {
+  const instance = instances.value[idx];
+  await deleteWireproxyInstance(instance);
   instances.value.splice(idx, 1);
 }
+
+let debounce: ReturnType<typeof setTimeout>;
+watch(instances, (value) => {
+  clearTimeout(debounce);
+  debounce = setTimeout(() => {
+    writeConfig(value);
+  }, 500);
+}, { deep: true });
 </script>

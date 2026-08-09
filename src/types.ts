@@ -50,3 +50,8 @@ export interface WireproxyInstance {
   wireproxyPath: string;
   proxies: ProxyInstance[];
 }
+
+export interface WireproxyManager {
+  instances: WireproxyInstance[];
+  ts: string;
+}
