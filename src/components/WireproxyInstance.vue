@@ -12,14 +12,23 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <UTooltip :text="`${model.running ? 'Stop' : 'Start'} instance`">
+          <UTooltip :ui="{ content: 'h-full p-2' }">
             <UButton
               variant="ghost"
               :icon="model.running ? 'i-lucide-pause' : 'i-lucide-play'"
               :loading="busy"
-              :disabled="usedPorts.includes(true)"
+              :disabled="startErrors.length > 0"
               @click.stop="toggleWireproxy"
             />
+
+            <template #content>
+              <ul v-if="startErrors.length > 0" class="space-y-1 list-disc list-inside">
+                <li v-for="(err, idx) in startErrors" :key="idx" class="text-error">
+                  {{ err }}
+                </li>
+              </ul>
+              <span v-else>{{ `${model.running ? 'Stop' : 'Start'} instance` }}</span>
+            </template>
           </UTooltip>
           <UTooltip text="Delete instance">
             <UButton
@@ -111,6 +120,25 @@ const model = defineModel<WireproxyInstance>({ required: true });
 const busy = ref(false);
 const name = computed(() => model.value.name || '(unnamed instance)');
 const disabled = computed(() => busy.value || model.value.running);
+
+const startErrors = computed(() => {
+  const errors: string[] = [];
+
+  if (!model.value.wireproxyPath) {
+    errors.push('Invalid wireproxy path');
+  }
+  if (!model.value.wgConfigPath) {
+    errors.push('Invalid WireGuard config path');
+  }
+  if (model.value.proxies.length === 0) {
+    errors.push('Instance does not have any proxies');
+  }
+  if (usedPorts.includes(true)) {
+    errors.push('Some proxy ports are already in use');
+  }
+
+  return errors;
+});
 
 function addProxy(type: ProxyType) {
   const proxy = createProxyInstance(type);
