@@ -52,6 +52,7 @@ onBeforeMount(async () => {
     instances.value = config.instances;
   } catch {
     instances.value = [];
+    writeConfig(instances.value);
   }
 });
 

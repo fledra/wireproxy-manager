@@ -5,9 +5,22 @@ import { exists, mkdir, readDir, readTextFile, remove, writeTextFile } from '@ta
 
 import { createWireproxyInstance, getConfigFilePath } from './wireproxy';
 
+async function ensureDir(path: string) {
+  const dir = await exists(path);
+  if (!dir) {
+    await mkdir(path, { recursive: true });
+  }
+  return path;
+}
+
 export async function getPaths() {
-  const configPath = await join(await appDataDir(), 'wireproxy-manager.config.json');
-  const configsBasePath = await join(await appDataDir(), 'configs');
+  const base = await appDataDir();
+  await ensureDir(base);
+
+  const configPath = await join(base, 'wireproxy-manager.config.json');
+  const configsBasePath = await join(base, 'configs');
+
+  await ensureDir(configsBasePath);
 
   return {
     configPath,
