@@ -18,7 +18,9 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "tauri:prepare": "tauri icon public/icon.svg && node scripts/getWireproxy.js"
+    "tauri:prepare": "tauri icon public/icon.svg && node scripts/getWireproxy.js",
+    "tauri:icon": "tauri icon public/icon.svg",
+    "tauri:sidecar": "node scripts/getWireproxy.js"
   },
   "dependencies": {
     "@nuxt/ui": "^4.10.0",
