@@ -30,7 +30,7 @@ import { computed, onBeforeMount, ref, watch } from 'vue';
 
 import { readConfig, writeConfig } from './utils/config';
 import { getProxyInstancePort } from './utils/proxy';
-import { createWireproxyInstance, deleteWireproxyInstance } from './utils/wireproxy';
+import { createWireproxyInstance, deleteWireproxyInstance, saveWireproxyInstance } from './utils/wireproxy';
 
 const instances = ref<WireproxyInstance[]>([]);
 const usedPorts = computed(() => {
@@ -59,6 +59,7 @@ onBeforeMount(async () => {
 function addWireproxyInstance() {
   const instance = createWireproxyInstance();
   instances.value.push(instance);
+  saveWireproxyInstance(instance);
 }
 
 async function removeWireproxyInstance(idx: number) {

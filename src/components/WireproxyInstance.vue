@@ -63,7 +63,7 @@
             formField: {
               root: 'gap-4',
               container: 'grow',
-              labelWrapper: 'min-w-29 justify-end',
+              labelWrapper: 'min-w-31 justify-end',
             },
           }"
         >
@@ -106,10 +106,10 @@
 <script setup lang="ts">
 import type { ProxyType, WireproxyInstance } from '../types';
 
-import { computed, onUnmounted, ref } from 'vue';
+import { computed, onUnmounted, ref, watch } from 'vue';
 
 import { createProxyInstance } from '../utils/proxy';
-import { launchWireproxy, stopWireproxy } from '../utils/wireproxy';
+import { launchWireproxy, saveWireproxyInstance, stopWireproxy } from '../utils/wireproxy';
 
 const { usedPorts = [] } = defineProps<{
   usedPorts?: boolean[];
@@ -188,4 +188,12 @@ async function toggleWireproxy() {
 }
 
 onUnmounted(stop);
+
+let debounce: ReturnType<typeof setTimeout>;
+watch(model, (value) => {
+  clearTimeout(debounce);
+  debounce = setTimeout(() => {
+    saveWireproxyInstance(value);
+  }, 500);
+}, { deep: true });
 </script>

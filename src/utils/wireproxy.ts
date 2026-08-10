@@ -17,6 +17,13 @@ export async function getConfigFilePath(instance: WireproxyInstance) {
   return join(configsBasePath, `${instance.id}.conf`);
 }
 
+export async function saveWireproxyInstance(instance: WireproxyInstance) {
+  const config = serializeWireproxyInstance(instance);
+  const path = await getConfigFilePath(instance);
+  await writeTextFile(path, config, { create: true, mode: 0o644 });
+  return path;
+}
+
 export function createWireproxyInstance(name?: string): WireproxyInstance {
   const id = nanoid(21);
 
@@ -36,11 +43,7 @@ export async function deleteWireproxyInstance(instance: WireproxyInstance) {
 }
 
 export async function launchWireproxy(instance: WireproxyInstance) {
-  const config = serializeWireproxyInstance(instance);
-  const path = await getConfigFilePath(instance);
-
-  await writeTextFile(path, config, { create: true, mode: 0o644 });
-
+  const path = await saveWireproxyInstance(instance);
   const cmd = Command.sidecar('binaries/wireproxy', ['-c', path]);
   const child = await cmd.spawn();
 
