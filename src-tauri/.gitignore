@@ -8,3 +8,6 @@ gen/schemas
 
 # generated icons
 icons/
+
+# sidecars
+binaries/
