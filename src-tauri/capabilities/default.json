@@ -31,7 +31,7 @@
           "args": [
             "-c",
             {
-              "validator": ".*[\\/]configs[\\/]\\S{21}\\.conf"
+              "validator": ".*wireproxy-manager[/\\\\]configs[/\\\\]\\S{21}\\.conf"
             }
           ]
         }
