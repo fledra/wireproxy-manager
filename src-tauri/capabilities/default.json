@@ -9,15 +9,17 @@
     "dialog:allow-open",
     "fs:default",
     "fs:read-dirs",
+    "fs:allow-exists",
     "fs:allow-read-text-file",
     "fs:allow-write-text-file",
     "fs:allow-remove",
     {
       "identifier": "fs:scope",
       "allow": [
-        { "path": "$APPDATA/wireproxy-manager.config.json" },
+        { "path": "$APPDATA" },
         { "path": "$APPDATA/configs" },
-        { "path": "$APPDATA/configs/*" }
+        { "path": "$APPDATA/configs/*" },
+        { "path": "$APPDATA/wireproxy-manager.config.json" }
       ]
     },
     {
