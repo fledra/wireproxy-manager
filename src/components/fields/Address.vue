@@ -3,7 +3,7 @@
     <UFormField :label="props.label" name="addr" class="grow">
       <UInput v-model.trim="state.addr" :disabled="props.disabled" />
     </UFormField>
-    <PortInput v-model="state.port" name="port" :error="error" :disabled="props.disabled" />
+    <PortInput v-model="state.port" name="port" :error="portError" :disabled="props.disabled" />
   </UForm>
 </template>
 
@@ -19,7 +19,7 @@ const props = defineProps<{
 }>();
 
 const model = defineModel<string>();
-const error = computed(() => props.portError ? 'Port in use' : undefined);
+const portError = computed(() => props.portError ? 'Port in use' : undefined);
 
 const schema = z.object({
   addr: z.union(
