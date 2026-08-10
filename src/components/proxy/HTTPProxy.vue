@@ -1,5 +1,5 @@
 <template>
-  <Address v-model="model.BindAddress" :default-port="80" label="Bind Address" :error="props.portError" />
+  <Address v-model="model.BindAddress" :default-port="80" label="Bind Address" :port-error="props.portError" />
 
   <UFormField label="Username">
     <UInput v-model="model.Username" :disabled="props.disabled" />
