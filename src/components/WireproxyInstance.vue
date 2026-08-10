@@ -5,8 +5,15 @@
       class="grow transition-all hover:bg-elevated/80 group-data-[state=open]:rounded-bl-none group-data-[state=open]:rounded-br-none"
     >
       <div class="flex items-center gap-1 max-[330px]:flex-col overflow-hidden">
-        <div class="flex gap-4 grow truncate text-clip max-[330px]:self-start">
-          <UChip :color="model.running ? 'success' : 'error'" standalone inset />
+        <div class="flex items-center gap-4 grow truncate text-clip max-[330px]:self-start">
+          <UTooltip>
+            <div class="flex">
+              <UChip :color="model.running ? 'success' : 'error'" standalone inset />
+            </div>
+            <template #content>
+              {{ status }} <span v-if="pid">(pid: {{ pid }})</span>
+            </template>
+          </UTooltip>
           <div class="font-semibold grow">
             {{ name }}
           </div>
@@ -35,7 +42,6 @@
               icon="i-lucide-x"
               variant="ghost"
               color="error"
-              :disabled="disabled"
               @click.stop="emit('delete')"
             />
           </UTooltip>
@@ -64,10 +70,7 @@
           <UFormField label="Instance Name" orientation="horizontal">
             <UInput v-model="model.name" placeholder="Enter instance name" :disabled="disabled" />
           </UFormField>
-          <UFormField label="Wireproxy Path" orientation="horizontal">
-            <FilePicker v-model="model.wireproxyPath" :disabled="disabled" />
-          </UFormField>
-          <UFormField label="Wireguard Config" orientation="horizontal">
+          <UFormField label="WireGuard Config" orientation="horizontal">
             <FilePicker
               v-model="model.wgConfigPath"
               :disabled="disabled"
@@ -103,9 +106,10 @@
 <script setup lang="ts">
 import type { ProxyType, WireproxyInstance } from '../types';
 
-import { computed, ref } from 'vue';
+import { computed, onUnmounted, ref } from 'vue';
 
 import { createProxyInstance } from '../utils/proxy';
+import { launchWireproxy, stopWireproxy } from '../utils/wireproxy';
 
 const { usedPorts = [] } = defineProps<{
   usedPorts?: boolean[];
@@ -118,15 +122,14 @@ const emit = defineEmits<{
 const model = defineModel<WireproxyInstance>({ required: true });
 
 const busy = ref(false);
+const pid = ref<number>();
+const status = computed(() => model.value.running ? 'Running' : 'Stopped');
 const name = computed(() => model.value.name || '(unnamed instance)');
 const disabled = computed(() => busy.value || model.value.running);
 
 const startErrors = computed(() => {
   const errors: string[] = [];
 
-  if (!model.value.wireproxyPath) {
-    errors.push('Invalid wireproxy path');
-  }
   if (!model.value.wgConfigPath) {
     errors.push('Invalid WireGuard config path');
   }
@@ -149,9 +152,40 @@ function removeProxy(idx: number) {
   model.value.proxies.splice(idx, 1);
 }
 
-async function toggleWireproxy() {
+async function start() {
   busy.value = true;
-  model.value.running = !model.value.running;
+
+  try {
+    pid.value = await launchWireproxy(model.value);
+    model.value.running = true;
+  } catch (error) {
+    console.error(error);
+  }
+
   busy.value = false;
 }
+
+async function stop() {
+  busy.value = true;
+
+  try {
+    await stopWireproxy(model.value);
+    pid.value = undefined;
+    model.value.running = false;
+  } catch (error) {
+    console.error(error);
+  }
+
+  busy.value = false;
+}
+
+async function toggleWireproxy() {
+  if (model.value.running) {
+    await stop();
+  } else {
+    await start();
+  }
+}
+
+onUnmounted(stop);
 </script>
