@@ -28,7 +28,7 @@ export async function getPaths() {
   };
 }
 
-export async function readConfig(): Promise<WireproxyManager> {
+export async function loadConfig(): Promise<WireproxyManager> {
   const paths = await getPaths();
 
   const content = await readTextFile(paths.configPath);
@@ -65,7 +65,7 @@ function configReplacer(key: string, value: unknown) {
   return value;
 }
 
-export async function writeConfig(instances: WireproxyInstance[]) {
+export async function saveConfig(instances: WireproxyInstance[]) {
   const paths = await getPaths();
   const config = {
     instances: [...instances],

@@ -28,7 +28,7 @@ import type { WireproxyInstance } from './types';
 
 import { computed, onBeforeMount, ref, watch } from 'vue';
 
-import { readConfig, writeConfig } from './utils/config';
+import { loadConfig, saveConfig } from './utils/config';
 import { getProxyInstancePort } from './utils/proxy';
 import { createWireproxyInstance, deleteWireproxyInstance, saveWireproxyInstance } from './utils/wireproxy';
 
@@ -48,11 +48,11 @@ const usedPorts = computed(() => {
 
 onBeforeMount(async () => {
   try {
-    const config = await readConfig();
+    const config = await loadConfig();
     instances.value = config.instances;
   } catch {
     instances.value = [];
-    writeConfig(instances.value);
+    saveConfig(instances.value);
   }
 });
 
@@ -72,7 +72,7 @@ let debounce: ReturnType<typeof setTimeout>;
 watch(instances, (value) => {
   clearTimeout(debounce);
   debounce = setTimeout(() => {
-    writeConfig(value);
+    saveConfig(value);
   }, 500);
 }, { deep: true });
 </script>
