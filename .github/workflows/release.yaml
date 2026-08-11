@@ -1,79 +1,26 @@
-name: release
+name: Release
 
 on:
-  push:
-    tags:
-      - v*
+  workflow_run:
+    workflows:
+      - Build app
+    types:
+      - completed
 
 jobs:
-  release:
+  build-success:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
     permissions:
       contents: write
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - platform: macos-latest
-            target: x86_64-apple-darwin
-          - platform: macos-latest
-            target: aarch64-apple-darwin
-          - platform: ubuntu-22.04
-            target: x86_64-unknown-linux-gnu
-          - platform: windows-latest
-            target: x86_64-pc-windows-msvc
-
-    runs-on: ${{ matrix.platform }}
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Setup Node.js LTS
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: lts/*
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
-        with:
-          version: 10
-          cache: true
-
-      - name: Setup Rust stable
-        uses: dtolnay/rust-toolchain@6c977a6ca4077a0ceb28ffbe03f59d46e9ac8772
-        with:
-          toolchain: stable
-          targets: ${{ matrix.target }}
-
-      - name: Setup Rust cache
-        uses: swatinem/rust-cache@v2
-        with:
-          workspaces: ./src-tauri -> target
-
-      - name: Install system dependencies
-        if: matrix.platform == 'ubuntu-22.04'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf xdg-utils
-
-      - name: Install frontend dependencies
-        run: pnpm install
-
-      - name: Prepare app assets
-        run: pnpm run tauri:prepare
-        env:
-          TAURI_TARGET: ${{ matrix.target }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: tauri-apps/tauri-action@v1
+      - name: Generate release notes
+        run: pnpx changelogithub@15.0.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tagName: v__VERSION__
-          releaseName: v__VERSION__
-          releaseBody: See the assets to download this version and install.
-          releaseAssetNamePattern: '[name]-[version]-[platform]-[arch][setup][ext]'
-          releaseDraft: true
-          prerelease: false
-          args: --target ${{ matrix.target }}
+
+  build-failure:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'Build workflow failed'
