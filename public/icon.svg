@@ -1,4 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" fill="none" style="-webkit-print-color-adjust::exact" viewBox="581 345 1024 1024">
-  <rect width="826" height="826" x="680" y="444" rx="180" ry="180" style="fill:#1e394e;fill-opacity:1"/>
-  <path d="M793.5 802.2H756V764h37.5zm37.5 38.2h-37.5v-38.2H831zm0 38.2v-38.2h37.5v38.2zm0 0v38.2h-37.5v-38.2zm-75 38.2h37.5V955H756zM1018.5 955H906v-38.2h112.5zM1093.5 764v114.6H1056V764zm75 114.6H1131V764h37.5zm75 0H1206V764h37.5zm-112.5 0V955h-37.5v-76.4zm75 0V955h-37.5v-76.4zM1318.5 878.6V955H1281V764h112.5v38.2h-75v38.2h75v38.2zm112.5-38.2h-37.5v-38.2h37.5z" class="fills" style="fill:#43d0ca"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" fill="none" version="1.1">
+  <defs>
+    <linearGradient id="bg-gradient" x1=".873" x2=".106" y1="-.176" y2="1.388">
+      <stop offset=".06" stop-color="#305a7d"/>
+      <stop offset=".68" stop-color="#1e394e"/>
+    </linearGradient>
+    <filter id="text-shadow" width="1.134" height="1.777" x="-.064" y="-.321" color-interpolation-filters="sRGB" filterUnits="objectBoundingBox">
+        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+        <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+        <feMorphology in="SourceAlpha" operator="dilate" radius="4" result="filter_e538e217-6335-80c6-8008-76ad220a988f"/>
+        <feOffset dx="2" dy="8"/>
+        <feGaussianBlur stdDeviation="5"/>
+        <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"/>
+        <feBlend in2="BackgroundImageFix" result="filter_e538e217-6335-80c6-8008-76ad220a988f"/>
+        <feBlend in="SourceGraphic" in2="filter_e538e217-6335-80c6-8008-76ad220a988f" result="shape"/>
+      </filter>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#bg-gradient)" rx="180" ry="180"/>
+  <g filter="url(#text-shadow)">
+    <path stroke-linecap="round" stroke-width="0" d="M101.333 458.703H64v-35.53h37.333zm37.334 35.532h-37.334v-35.532h37.334zm0 35.53v-35.53H176v35.53zm0 0v35.532h-37.334v-35.532zM64 565.297h37.333v35.53H64zm261.333 35.53h-112v-35.53h112zM400 423.173v106.593h-37.333V423.172zm74.667 106.593h-37.334V423.172h37.334zm74.666 0H512V423.172h37.333zm-112 0v71.063H400v-71.063zm74.667 0v71.063h-37.333v-71.063zm112 0v71.063h-37.333V423.172h112v35.531H624v35.532h74.667v35.53zm112-35.53h-37.333v-35.532H736zm74.667 0v106.593h-37.334V423.172h37.334v35.531H848v35.532zM960 423.172v177.656h-37.333V494.235h-37.334v-35.532h37.334v-35.53zm-74.667 106.593H848v-35.53h37.333z" style="fill:#43d0ca;fill-opacity:1"/>
+  </g>
 </svg>
