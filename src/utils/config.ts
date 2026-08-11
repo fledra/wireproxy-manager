@@ -58,6 +58,13 @@ export async function readConfig(): Promise<WireproxyManager> {
   return config;
 }
 
+function configReplacer(key: string, value: unknown) {
+  if (key === 'instances' && Array.isArray(value)) {
+    return value.map((v) => ({ ...v, running: undefined }));
+  }
+  return value;
+}
+
 export async function writeConfig(instances: WireproxyInstance[]) {
   const paths = await getPaths();
   const config = {
@@ -67,7 +74,7 @@ export async function writeConfig(instances: WireproxyInstance[]) {
 
   await writeTextFile(
     paths.configPath,
-    JSON.stringify(config, undefined, 2),
+    JSON.stringify(config, configReplacer, 2),
     { create: true, mode: 0o644 },
   );
 }
