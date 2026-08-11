@@ -19,6 +19,7 @@ const props = defineProps<{
 }>();
 
 const model = defineModel<string>();
+const modelState = computed(() => model.value?.split(':'));
 const portError = computed(() => props.portError ? 'Port in use' : undefined);
 
 const schema = z.object({
@@ -34,8 +35,8 @@ const schema = z.object({
 });
 
 const state = reactive<z.output<typeof schema>>({
-  addr: '127.0.0.1',
-  port: props.defaultPort ?? 1025,
+  addr: modelState.value?.[0] ?? '127.0.0.1',
+  port: (Number(modelState.value?.[1]) || props.defaultPort) ?? 1025,
 });
 
 watchEffect(() => {
